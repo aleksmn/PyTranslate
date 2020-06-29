@@ -3,16 +3,18 @@ from difflib import get_close_matches
 
 data = json.load(open('data.json'))
 
-def get_match(word):
-    return get_close_matches(word, data.keys(), cutoff=0.8)[0]
-
-def translate(word):
-    if word in data:
-        return data[word]
-    elif get_match(word):
-        yn = (input(f'Did you meen "{get_match(word)}"? (Y/N) ')).upper()
+def translate(w):
+    if w.lower() in data:
+        return data[w]
+    elif w.title() in data:
+        return data[w.title()]
+    elif w.upper() in data:
+        return data[w.upper()]
+    elif len(get_close_matches(w, data.keys(), cutoff=0.8)) > 0:
+        match = get_close_matches(w, data.keys(), cutoff=0.8)[0]
+        yn = (input(f'Did you meen "{match}"? (Y/N) ')).upper()
         if yn == 'Y':
-            return data[get_match(word)]
+            return data[match]
         elif yn == 'N':
             return 'The word does not exists.'
         else:
@@ -20,12 +22,27 @@ def translate(word):
     else:
         return 'The word does not exists.'
 
-word = (input('Enter word: ')).lower()
 
-output = translate(word)
+print('\n'
+      '==========================\n'
+      'Welcome to our dictionary!\n'
+      '        (q to quit)       \n'
+      '==========================')
 
-if isinstance(output, list):
-    for i in output:
-        print(i)
-else:
-    print(output)
+try:
+    while True:
+        word = (input('\nEnter a word: '))
+
+        if word.lower() == 'q':
+            print('Thank you! Bye-bye!')
+            break
+
+        output = translate(word)
+
+        if isinstance(output, list):
+            for i in output:
+                print(i)
+        else:
+            print(output)
+except KeyboardInterrupt as e:
+    print('\nProgramm interrupted. Bye!')
