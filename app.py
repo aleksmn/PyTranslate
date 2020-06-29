@@ -29,6 +29,7 @@ def translate(w):
 print('\n'
       '==========================\n'
       'Welcome to our dictionary!\n'
+      '         Version 1        \n'
       '        (q to quit)       \n'
       '==========================')
 
