@@ -1,3 +1,6 @@
+# English Dictionary App
+# Getting data from local JSON file
+
 import json
 from difflib import get_close_matches
 
