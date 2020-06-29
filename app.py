@@ -1,10 +1,11 @@
 # English Dictionary App
 # Getting data from local JSON file
 
+import os
 import json
 from difflib import get_close_matches
 
-data = json.load(open('data.json'))
+data = json.load(open(os.path.dirname(__file__) + '/data.json'))
 
 def translate(w):
     if w.lower() in data:
@@ -35,8 +36,7 @@ print('\n'
 
 try:
     while True:
-        word = (input('\nEnter a word: '))
-
+        word = (input('\n: '))
         if word.lower() == 'q':
             print('Thank you! Bye-bye!')
             break
@@ -45,7 +45,7 @@ try:
 
         if isinstance(output, list):
             for i in output:
-                print(i)
+                print('>', i)
         else:
             print(output)
 except KeyboardInterrupt as e:
